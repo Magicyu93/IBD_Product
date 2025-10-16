@@ -1,6 +1,7 @@
 from vector_store import initialize_vector_store
 from backend import team, dialog_print
 
+import os
 import pathlib
 import time
 import asyncio
@@ -43,10 +44,11 @@ async def frontend_run():
     dialog_print(result)
 
 
-def save_results(filename : str, result, dir = "./output/"):
-    with open(dir + filename + '_diaglog.pkl', 'wb') as f:
+def save_results(filename : str, result):
+    dir = os.path.join(os.path.dirname(__file__), 'output')
+    with open(os.path.join(dir, filename + '_diaglog.pkl'), 'wb') as f:
         pickle.dump(result, f)
-    with open(dir + filename + ".md", 'w') as f:
+    with open(os.path.join(dir, filename + ".md"), 'w') as f:
         f.write(result.messages[-1].content)
 
 
@@ -90,18 +92,32 @@ async def recent_news_trends(company):
     save_results('recent_news_trends', result)
     return result
 
+# question 12
+async def management_info(company):
+    news_trend_team = team(['sec_filling_report_analysis_agent', 'report_agent'])
+
+    questions = [
+        "Who is the leadership team? Has the company indicated any pending changes to its leadership team"
+    ]
+
+    result = await news_trend_team.run(
+        f"Elaborate each question, and give me as more information as possible for {company}?\n" + "\n".join(questions))
+
+    save_results('management_info', result)
+    return result
+
 
 # question  13, 14, 15, 16, 17
 async def financial_info(company):
-    # financial_info_team = team(['sec_filling_report_analysis_agent', 'news_analysis_agent', 'financial_statement_analysis_agent', 'stock_price_analysis_agent', 'report_agent'])
+
     financial_info_team = team(['financial_statement_analysis_agent', 'report_agent'])
 
     questions = [
-        "If the company is public, how is its share price look like?",
-        "If the company is public, how have its valuation multiples performed?",
+        "How is the company's share price look like?",
+        "How have the company's valuation multiples performed?",
         "What is the company's overall financial profile?",
-        "If the company is public, what is the current consensus equity research views on its projections and business performances? What are the target prices and ratings? ",
-        "If the company if private, are there any indications to its value? (e.g. procedent capital raises, parent valuation marks, prior transactions)"
+        "What is the current consensus equity research views on company's projections and business performances? What are the target prices and ratings? ",
+        # "If the company if private, are there any indications to its value? (e.g. procedent capital raises, parent valuation marks, prior transactions)"
     ]
 
     general_prompt = f"Expand each question and make as detailed as possible, and give me as more information as possible for {company}?\n. Use agents to get the charts and pictures and produce all the output with references. Also, produce the tables in the output wherever needed. For news related data give me the exact source. Reference for each of the number in the output is important"
@@ -160,12 +176,27 @@ async def M_n_A_profile(company):
 # main()
 
 
-# result = asyncio.run(overview("GOOGLE"))
-# result = asyncio.run(recent_news_trends("GOOGLE"))
-result = asyncio.run(financial_info("GOOG"))
-# result = asyncio.run(oppotunities_competition_info("GOOGLE"))
-# result = asyncio.run(geographic("GOOGLE"))
-# result = asyncio.run(M_n_A_profile("GOOGLE"))
+result1 = asyncio.run(overview("GOOGLE"))
+result2 = asyncio.run(recent_news_trends("GOOGLE"))
+result3 = asyncio.run(financial_info("GOOG"))
+result4 = asyncio.run(oppotunities_competition_info("GOOGLE"))
+result5 = asyncio.run(geographic("GOOGLE"))
+result6 = asyncio.run(M_n_A_profile("GOOGLE"))
+result7 = asyncio.run(management_info("GOOGLE"))
 
 
-dialog_print(result)
+## map backend functions in main.py
+# agg_functions = ['overview', 'recent_news_trends', 'financial_info', 'management_info', 'oppotunities_competition_info', 'geographic', 'M_n_A_profile']
+
+
+# async def run_all_backend_functions(agg_functions, company):
+#     """
+#     Run all functions concurrently and store their results in a dictionary
+#     """
+#
+#     results = await asyncio.gather(*[getattr(func_name)(company) for func_name in agg_functions])
+#     return {func_name: result.messages[-1].content for func_name, result in zip(agg_functions, results)}
+#
+# asyncio.run(run_all_backend_functions(agg_functions, 'GOOGL'))
+
+# dialog_print(result)

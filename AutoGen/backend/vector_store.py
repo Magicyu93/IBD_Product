@@ -3,6 +3,7 @@ import os
 os.environ["AZURE_OPENAI_API_KEY"] = "1b31fc4eb58c4879960c46f697d72af6"
 os.environ["AZURE_OPENAI_ENDPOINT"] = "https://genai-openai-quantifai.openai.azure.com/"
 
+
 from langchain_openai import AzureOpenAIEmbeddings
 
 from langchain_community.vectorstores import FAISS

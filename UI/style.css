@@ -1,0 +1,77 @@
+/* Change sidebar background color */
+.css-1d391kg .css-1aumxhk {
+    background-color: #1f3b75 !important; /* Replace with your desired color */
+}
+
+.css-1d391kg .css-1aumxhk .css-1v3fvcr {
+    color: #333333; /* Text color for sidebar content */
+}
+
+
+/* Sidebar styling */
+.sidebar-section {
+    background-color: #1f3b75;
+    padding: 20px;
+    border-radius: 15px;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.sidebar-section .tab-title {
+    background-color: #00bfff;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    border-radius: 10px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+/* Top horizontal sub-tabs */
+.stTabs [data-baseweb="tab"] {
+    background-color: #003366;
+    color: white;
+    padding: 10px 10px;
+    border-radius: 10px;
+    font-size: 24px;
+    margin-right: 5px;
+}
+
+.stTabs [data-baseweb="tab"]:hover {
+    background-color: #00bfff;
+}
+
+.stTabs [data-baseweb="tab"][aria-selected="true"] {
+    background-color: #00bfff;
+    color: white;
+    font-weight: bold;
+}
+.block-container {
+    padding-top: 1.5rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    padding-bottom: 1.5rem;
+
+}
+
+/* Main content area */
+.main-content {
+    background-color: #1f3b75 !important;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+/* Download button */
+.download-btn {
+    background-color: #00bfff;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    text-align: center;
+    width: 150px;
+    margin-top: 20px;
+}
